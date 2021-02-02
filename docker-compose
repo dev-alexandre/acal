@@ -1,1 +1,31 @@
 
+version: '3'
+
+services:
+  app:
+    imagem: 'acalapp:1.0.0'
+    build:
+      context: ./acalapp
+    container_name: app
+    depends_on: 
+      - api
+
+  api:
+    image: 'acalapi:1.0.0'
+    build:
+      context: ./acalapi
+    container_name: api
+    depends_on:
+      - db
+    environment:
+      - DB_NAME: acal
+      - DB_USER: admin
+      - DB_PASSWORD: senha_desenvolvimento
+      - DB_PORT: 27017
+      - DB_HOST: localhost
+
+  db:
+    imagem: 'acaldb:1.0.0'
+    build:
+     context: ./acaldb
+    container_name: db
